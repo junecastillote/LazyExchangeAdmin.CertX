@@ -9,12 +9,19 @@ param (
     $ServerList,
 
     <#
-        This parameter indicates to return on certificates that are expiring in X days.
+        This parameter indicates to return on certificates that are expiring in exactly X days.
         If not used, all certificates in LocalMachine\My will be reported
     #>
     [Parameter()]
     [int[]]
-    $ExpiringInDays
+    $ExpiringInDays,
+
+    <#
+        List (array) of certificate thumbprint to be excluded
+    #>
+    [Parameter()]
+    [array]
+    $ExclusionList
 )
 
 $today = Get-Date
@@ -29,11 +36,16 @@ foreach ($server in $ServerList) {
     if ($certObjectList) {
         foreach ($certObject in $certObjectList) {
 
-            # Calculate
+            if ($ExclusionList -contains $certObject.Thumbprint) {
+                continue
+            }
+
+            # Calculate remaining days before expiration.
             $DaysLeft = (New-TimeSpan -Start $today -End ($certObject.NotAfter)).Days
 
+            # Create temp object to hold values
             $tempObj = [ordered]@{
-                PSTypeName                = "LazyExchangeAdmin.Certificate.Report"
+                PSTypeName                = 'LazyExchangeAdmin.Certificate.Report'
                 "Server Name"             = $server
                 "Certificate Name"        = ($certObject.Subject)
                 "Certificate Thumbprint"  = ($certObject.Thumbprint)
@@ -42,12 +54,15 @@ foreach ($server in $ServerList) {
                 "Day(s) Remaining"        = $DaysLeft
             }
 
+            # If ExpiringInDays is not specified, add the object to the report.
             if (!$ExpiringInDays) {
                 $finalResult += New-Object psobject -property $tempObj
             }
 
+            # If ExpiringInDay is specified, compare the remaining days with the threshold.
             if ($ExpiringInDays) {
                 foreach ($day in $ExpiringInDays) {
+                    # If remaining days is equal to the threshold, add the object to the report.
                     if ($DaysLeft -eq $day) {
                         $finalResult += New-Object psobject -property $tempObj
                     }
