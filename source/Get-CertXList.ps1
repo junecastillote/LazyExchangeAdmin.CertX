@@ -73,7 +73,7 @@ Function Get-CertXList {
             }
         }
     }
-    return $finalResult
+    return $finalResult | Sort-Object 'Server Name','Day(s) Remaining'
 }
 
 
