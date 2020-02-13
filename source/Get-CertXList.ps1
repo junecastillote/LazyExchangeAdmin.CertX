@@ -1,25 +1,26 @@
 Function Get-CertXList {
     [cmdletbinding()]
+    [OutputType([System.Object[]])]
     param (
         <#
-        This parameter accepts the list (array) of servers to be checked.
-    #>
+            This parameter accepts the list (array) of servers to be checked.
+        #>
         [Parameter(Mandatory)]
         [ValidateNotNullOrEmpty()]
         [array]
         $ServerList,
 
         <#
-        This parameter indicates to return on certificates that are expiring in exactly X days.
-        If not used, all certificates in LocalMachine\My will be reported
-    #>
+            This parameter indicates to return on certificates that are expiring in exactly X days.
+            If not used, all certificates in LocalMachine\My will be reported
+        #>
         [Parameter()]
         [int[]]
         $ExpiringInDays,
 
         <#
-        List (array) of certificate thumbprint to be excluded
-    #>
+            List (array) of certificate thumbprint to be excluded
+        #>
         [Parameter()]
         [array]
         $ExclusionList

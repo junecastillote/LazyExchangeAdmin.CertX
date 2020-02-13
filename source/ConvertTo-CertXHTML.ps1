@@ -1,11 +1,12 @@
 Function ConvertTo-CertXHTML {
     [CmdletBinding()]
+    [OutputType([System.String])]
     param (
         [Parameter(
             Mandatory,
             Position = 0,
             ValueFromPipeline
-            )
+        )
         ]
         [ValidateNotNullOrEmpty()]
         [PSTypeNameAttribute('LazyExchangeAdmin.Certificate.Report')]
@@ -17,10 +18,6 @@ Function ConvertTo-CertXHTML {
     )
     begin {
         $ModuleInfo = Get-Module LazyExchangeAdmin.CertX
-        #$css = Get-Content (($ModuleInfo.ModuleBase.ToString()) + '\source\style.css') -Raw
-        #$tz = ([System.TimeZoneInfo]::Local).DisplayName.ToString().Split(" ")[0]
-        #$today = Get-Date -Format "MMMM dd, yyyy hh:mm tt"
-
         $body = @()
         $body += '<html><head><title>' + $title + '</title>'
         $body += '<style type="text/css">'
@@ -28,18 +25,26 @@ Function ConvertTo-CertXHTML {
         $body += '</style></head>'
         $body += '<body>'
         $body += '<table class="tbl">'
-        $body += '<tr><th>Server Name</th><th>Certificate Name</th><th>Certificate Thumbprint</th><th>Valid From</th><th>Valid Until</th><th>Day(s) Remaining</th></tr>'
+        $body += '<thead><tr>
+            <th>Server Name</th>
+            <th>Certificate Name</th>
+            <th>Certificate Thumbprint</th>
+            <th>Valid From</th>
+            <th>Valid Until</th>
+            <th>Day(s) Remaining</th>
+            </tr>
+            </thead>'
     }
     process {
         foreach ($item in $InputObject) {
             $body += '<tr>' + `
-            '<td>'+ $item.'Server Name'+'</td>'+ `
-            '<td>'+ $item.'Certificate Name'+'</td>'+ `
-            '<td>'+ $item.'Certificate Thumbprint'+'</td>'+ `
-            '<td>'+ $item.'Certificate Valid From'+'</td>'+ `
-            '<td>'+ $item.'Certificate Valid Until'+'</td>'+ `
-            '<td>'+ $item.'Day(s) Remaining'+'</td>'+ `
-            '</tr>'
+                '<td>' + $item.'Server Name' + '</td>' + `
+                '<td>' + $item.'Certificate Name' + '</td>' + `
+                '<td>' + $item.'Certificate Thumbprint' + '</td>' + `
+                '<td>' + $item.'Certificate Valid From' + '</td>' + `
+                '<td>' + $item.'Certificate Valid Until' + '</td>' + `
+                '<td>' + $item.'Day(s) Remaining' + '</td>' + `
+                '</tr>'
         }
     }
     end {
