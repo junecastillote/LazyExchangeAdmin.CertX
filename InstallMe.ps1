@@ -48,7 +48,7 @@ try {
     Write-Output ""
     Write-Output "Success. Installed to $ModulePath"
     Write-Output ""
-    Import-Module ExCmdReport
+    Import-Module LazyExchangeAdmin.CertX
 }
 catch {
     Write-Output ""
