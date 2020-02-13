@@ -49,6 +49,6 @@ Function ConvertTo-CertXHTML {
     }
     end {
         $body += '</table></body></html>'
-        return $body
+        return ($body -join "`n")
     }
 }
