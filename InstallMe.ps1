@@ -48,7 +48,7 @@ try {
     Write-Output ""
     Write-Output "Success. Installed to $ModulePath"
     Write-Output ""
-    Import-Module LazyExchangeAdmin.CertX
+    Import-Module ($Moduleinfo.Name)
 }
 catch {
     Write-Output ""
