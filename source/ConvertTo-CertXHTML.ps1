@@ -1,4 +1,4 @@
-Function ConvertTo-CertXHTML {
+Function ConvertTo-CertXHtml {
     [CmdletBinding()]
     [OutputType([System.String])]
     param (
@@ -21,7 +21,7 @@ Function ConvertTo-CertXHTML {
         $body = @()
         $body += '<html><head><title>' + $title + '</title>'
         $body += '<style type="text/css">'
-        $body += (Get-Content (($ModuleInfo.ModuleBase.ToString()) + '\source\style.css') -Raw)
+        $body += (Get-Content (($ModuleInfo.ModuleBase.ToString()) + '\source\static\css\style.css') -Raw)
         $body += '</style></head>'
         $body += '<body>'
         $body += '<table class="tbl">'
