@@ -21,7 +21,6 @@ $mailProps = @{
     From = 'reports@posh.lab'
     To = 'admin@posh.lab','june@posh.lab'
     Subject = 'Certificate Expiration Report'
-	BodyAsHtml = $true
 }
 
 ## END EDIT HERE
@@ -48,10 +47,9 @@ if ($certXobject) {
     Write-Output ('>> Found ' + (@($certXobject).count) + ' certificate(s)')
     $certXobject | ConvertTo-CertXHtml | Out-File $reportFile
     Write-Output '>> Sending email report'
-    Send-MailMessage @mailProps -Body (Get-Content $reportFile -raw)
+    Send-MailMessage @mailProps -Body (Get-Content $reportFile -raw) -BodyAsHtml
 }
 else {
     Write-Output ('>> Found ' + (@($certXobject).count) + ' certificate(s)')
     Write-Output '>> Email abort'
 }
-```

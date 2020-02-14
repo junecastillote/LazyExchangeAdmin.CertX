@@ -7,7 +7,7 @@ This module, *LazyExchangeAdmin.ExchangeCertNotify*, can be used to get a list o
 ## Requirements
 
 * Windows PowerShell 5.1 (sorry, no PowerShell Core)
-* Download the module [here](https://github.com/junecastillote/LazyExchangeAdmin.CertX/archive/master.zip)
+* Download the module [here](https://github.com/junecastillote/LazyExchangeAdmin.CertX/archive/master.zip), and then export it to your preferred folder.
 
 ## How to Use
 
@@ -37,7 +37,7 @@ Import-Module .\LazyExchangeAdmin.CertX.psd1
 Get-CertXList -ServerList Server1,Server2 -ExpiringInDays 14,6
 ```
 
-The `-ExpiringInDays` parameter accepts multiple integer values.
+> The `-ExpiringInDays` parameter accepts multiple integer values.
 
 The output below shows that only those certificates that will expire in EXACTLY 6 and 14 days are returned.
 
@@ -87,7 +87,6 @@ $mailProps = @{
     From = 'reports@posh.lab'
     To = 'admin@posh.lab','june@posh.lab'
     Subject = 'Certificate Expiration Report'
-    BodyAsHtml = $true
 }
 
 ## END EDIT HERE
@@ -114,7 +113,7 @@ if ($certXobject) {
     Write-Output ('>> Found ' + (@($certXobject).count) + ' certificate(s)')
     $certXobject | ConvertTo-CertXHtml | Out-File $reportFile
     Write-Output '>> Sending email report'
-    Send-MailMessage @mailProps -Body (Get-Content $reportFile -raw)
+    Send-MailMessage @mailProps -Body (Get-Content $reportFile -raw) -BodyAsHtml
 }
 else {
     Write-Output ('>> Found ' + (@($certXobject).count) + ' certificate(s)')
