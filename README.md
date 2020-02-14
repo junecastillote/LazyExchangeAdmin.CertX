@@ -129,3 +129,5 @@ The screenshot below shows that helper script in action.
 And the report below is what you can expect to be delivered as email.
 
 ![Email Report](source/static/image/email_report.png)
+
+If you found issues or have any recommendations/suggestions, you may [open an issue here](https://github.com/junecastillote/LazyExchangeAdmin.CertX/issues).
