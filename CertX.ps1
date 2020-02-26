@@ -7,7 +7,11 @@ $modulePath = "C:\Scripts\CertX\LazyExchangeAdmin.CertX.psd1"
 $reportFile = "C:\Scripts\CertX\CertReport.html"
 
 # [REQUIRED] The servers to be monitored
+# OPTION 1: Manual server list
 $serverList = @('devpc')
+
+# OPTION 2: Import server list from file
+# $serverList = Get-Content -Path <path to txt file>
 
 # [OPTIONAL] Expiring in Days
 $expiringInDays = @(7,15,30,60)
